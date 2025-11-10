@@ -55,8 +55,12 @@ def calculate_rsi(df, period=14):
     delta = df['Close'].diff()
     gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
     loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
-    rs = gain / loss
-    rsi = 100 - (100 / (1 + rs))
+        # Handle division by zero
+    if loss.iloc[-1] == 0:
+        rsi = 100.0  # When there's no loss, RSI is maximum
+    else:
+        rs = gain / loss
+        rsi = 100 - (100 / (1 + rs))
     return rsi.iloc[-1] if len(rsi) > 0 else 50
 
 # Sidebar Filters
