@@ -4,6 +4,7 @@ import yfinance as yf
 import plotly.graph_objects as go
 from datetime import datetime, timedelta
 import time
+import numpy as np
 
 st.set_page_config(page_title="NSE Stock Screener", page_icon="📈", layout="wide")
 
