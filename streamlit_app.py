@@ -13,18 +13,47 @@ st.title("📈 NSE Stock Screener")
 st.markdown("Interactive tool for screening NSE stocks with technical and fundamental filters")
 
 # NSE Stock List (Top 100 NSE stocks)
-NSE_STOCKS = [
-    "RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "INFY.NS", "HINDUNILVR.NS",
-    "ICICIBANK.NS", "KOTAKBANK.NS", "SBIN.NS", "BHARTIARTL.NS", "BAJFINANCE.NS",
-    "ITC.NS", "ASIANPAINT.NS", "HCLTECH.NS", "AXISBANK.NS", "LT.NS",
-    "MARUTI.NS", "SUNPHARMA.NS", "TITAN.NS", "ULTRACEMCO.NS", "WIPRO.NS",
-    "NESTLEIND.NS", "NTPC.NS", "POWERGRID.NS", "ONGC.NS", "M&M.NS",
-    "BAJAJFINSV.NS", "TECHM.NS", "TATAMOTORS.NS", "TATASTEEL.NS", "ADANIPORTS.NS",
-    "JSWSTEEL.NS", "HINDALCO.NS", "INDUSINDBK.NS", "DRREDDY.NS", "CIPLA.NS",
-    "DIVISLAB.NS", "BRITANNIA.NS", "GRASIM.NS", "COALINDIA.NS", "SHREECEM.NS",
-    "EICHERMOT.NS", "UPL.NS", "BAJAJ-AUTO.NS", "HDFCLIFE.NS", "SBILIFE.NS",
-    "APOLLOHOSP.NS", "ADANIENT.NS", "TATACONSUM.NS", "HEROMOTOCO.NS", "VEDL.NS"
-]
+# Comprehensive NSE Stock Database with Sector Mappings
+STOCK_SECTORS = {
+    # IT Sector
+    "TCS.NS": "IT", "INFY.NS": "IT", "HCLTECH.NS": "IT", "WIPRO.NS": "IT", "TECHM.NS": "IT",
+    "LTI.NS": "IT", "MPHASIS.NS": "IT", "COFORGE.NS": "IT",
+    # Banking
+    "HDFCBANK.NS": "Banking", "ICICIBANK.NS": "Banking", "KOTAKBANK.NS": "Banking", "SBIN.NS": "Banking",
+    "AXISBANK.NS": "Banking", "INDUSINDBK.NS": "Banking", "BANKBARODA.NS": "Banking", "PNB.NS": "Banking",
+    "IDFCFIRSTB.NS": "Banking", "FEDERALBNK.NS": "Banking",
+    # Pharma
+    "SUNPHARMA.NS": "Pharma", "DRREDDY.NS": "Pharma", "CIPLA.NS": "Pharma", "DIVISLAB.NS": "Pharma",
+    "BIOCON.NS": "Pharma", "AUROPHARMA.NS": "Pharma", "LUPIN.NS": "Pharma", "TORNTPHARM.NS": "Pharma",
+    # Auto
+    "MARUTI.NS": "Auto", "TATAMOTORS.NS": "Auto", "M&M.NS": "Auto", "BAJAJ-AUTO.NS": "Auto",
+    "HEROMOTOCO.NS": "Auto", "EICHERMOT.NS": "Auto", "ASHOKLEY.NS": "Auto", "TVSMOTOR.NS": "Auto",
+    # FMCG
+    "HINDUNILVR.NS": "FMCG", "ITC.NS": "FMCG", "NESTLEIND.NS": "FMCG", "BRITANNIA.NS": "FMCG",
+    "DABUR.NS": "FMCG", "MARICO.NS": "FMCG", "GODREJCP.NS": "FMCG", "TATACONSUM.NS": "FMCG",
+    # Energy
+    "RELIANCE.NS": "Energy", "ONGC.NS": "Energy", "NTPC.NS": "Energy", "POWERGRID.NS": "Energy",
+    "COALINDIA.NS": "Energy", "IOC.NS": "Energy", "BPCL.NS": "Energy", "GAIL.NS": "Energy",
+    # Metals
+    "TATASTEEL.NS": "Metals", "HINDALCO.NS": "Metals", "JSWSTEEL.NS": "Metals", "VEDL.NS": "Metals",
+    "JINDALSTEL.NS": "Metals", "SAIL.NS": "Metals",
+    # Cement
+    "ULTRACEMCO.NS": "Cement", "GRASIM.NS": "Cement", "SHREECEM.NS": "Cement",
+    # Telecom
+    "BHARTIARTL.NS": "Telecom",
+    # Financial Services
+    "BAJFINANCE.NS": "Financial Services", "BAJAJFINSV.NS": "Financial Services",
+    "HDFCLIFE.NS": "Financial Services", "SBILIFE.NS": "Financial Services",
+    # Infrastructure
+    "LT.NS": "Infrastructure", "ADANIPORTS.NS": "Infrastructure",
+    # Consumer Durables
+    "TITAN.NS": "Consumer Durables", "HAVELLS.NS": "Consumer Durables",
+    # Others
+    "APOLLOHOSP.NS": "Healthcare", "ADANIENT.NS": "Diversified", "UPL.NS": "Chemicals",
+    "HDFCLIFE.NS": "Financial Services", "SBILIFE.NS": "Financial Services",
+}
+
+NSE_STOCKS = list(STOCK_SECTORS.keys())
 
 # Calculate ADX
 def calculate_adx(df, period=14):
