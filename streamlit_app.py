@@ -144,7 +144,7 @@ pe_range = st.sidebar.slider("P/E Ratio Range", 0, 100, default_pe)
 st.sidebar.subheader("Sector Filter")
 sectors = st.sidebar.multiselect(
     "Select Sectors",
-    ["All", "IT", "Banking", "Pharma", "Auto", "FMCG", "Energy"],
+    ["All", "IT", "Banking", "Pharma", "Auto", "FMCG", "Energy", "Metals", "Cement", "Telecom", "Financial Services", "Infrastructure", "Consumer Durables", "Healthcare", "Diversified", "Chemicals"],
     default=["All"]
 )
 
@@ -177,8 +177,7 @@ if 'run_screening' in st.session_state and st.session_state.run_screening:
                 info = ticker.info
                 pe_ratio = info.get('trailingPE', 0)
                 market_cap = info.get('marketCap', 0)
-                sector = info.get('sector', 'Unknown')
-                
+            sector = STOCK_SECTORS.get(stock, 'Unknown')                
                 # Mock PAT growth (in real scenario, fetch from financial statements)
                 pat_growth = (df['Close'].iloc[-1] - df['Close'].iloc[-60]) / df['Close'].iloc[-60] * 100 if len(df) >= 60 else 0
                 
@@ -187,7 +186,8 @@ if 'run_screening' in st.session_state and st.session_state.run_screening:
                     avg_volume >= volume_min and
                     rsi_range[0] <= rsi <= rsi_range[1] and
                     pat_growth >= pat_growth_min and
-                    pe_range[0] <= pe_ratio <= pe_range[1]):
+                    pe_range[0] <= pe_ratio <= pe_range[1]) and
+                ('All' in sectors or sector in sectors):
                     
                     results.append({
                         'Symbol': stock.replace('.NS', ''),
