@@ -204,7 +204,7 @@ if 'run_screening' in st.session_state and st.session_state.run_screening:
                 # Update progress
                 progress_bar.progress((idx + 1) / len(NSE_STOCKS))
                 
-        except Exception as e:
+    except Exception as e:
                 continue
         
         # Store results in session state
