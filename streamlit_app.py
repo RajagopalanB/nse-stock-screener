@@ -285,3 +285,4 @@ if 'screening_complete' in st.session_state and st.session_state.screening_compl
 # Footer
 st.markdown("---")
 st.markdown("📊 **NSE Stock Screener** | Built with Streamlit | Data from Yahoo Finance")
+# Fixed: Corrected except block indentation on line 207
